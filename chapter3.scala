@@ -51,6 +51,7 @@ b.toString   //useful scala toString because it's not an Array...
 println
 println
 
+//ex 1
 def randomArray(a : Array[Int]) : Array[Int] = {
   val b = ArrayBuffer[Int]()
   val random = new Random()
@@ -60,4 +61,17 @@ def randomArray(a : Array[Int]) : Array[Int] = {
   }
   b.toArray
 }
+val d = randomArray(Array(1,1,1,1))
 
+//ex 2
+def swapArray(a : Array[Int]) : Array[Int] = {
+  val swapped = ArrayBuffer[Int] ()
+  for (i <- 1 to a.length by 2) {
+    if (i >= a.length) {
+      swapped += a(a.length-1)
+    } else {
+      swapped += a(i) += a(i-1)
+    }
+  }
+  swapped.toArray
+}
