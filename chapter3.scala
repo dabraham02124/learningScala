@@ -23,8 +23,18 @@ for (elem <- b)
   println(elem)
 
 
-// exercises
+val a = Array(2,3,5,7,11)
+val result = for (elem <- a) yield 2 * elem
+val result2 = for (elem <- a if elem % 2 == 0) yield 2 * elem //this one fixes a bug in the book
+a.filter(_ %2 == 0).map(2*_)
+a filter {_%2 == 0} map {2*_}
 
+
+
+// exercises
+println
+println
+println
 
 def randomArray(a : Array[Int]) : Array[Int] = {
   val b = ArrayBuffer[Int]()
