@@ -12,7 +12,8 @@ def randomArray(a : Array[Int]) : Array[Int] = {
   }
   b.toArray
 }
-val d = randomArray(Array(1,1,1,1))
+
+randomArray(Array(1,1,1,1))
 
 println
 println("exercise 2")
@@ -28,7 +29,8 @@ def swapArray(a : Array[Int]) : Array[Int] = {
   }
   swapped.toArray
 }
-val e = swapArray(Array(1,2,3,4,5))
+
+swapArray(Array(1,2,3,4,5))
 
 println
 println("exercise 3")
@@ -45,14 +47,16 @@ def swapArrayForYield(a : Array[Int]) : Array[Int] = {
   swapped.toArray
 }
 
-val f = swapArrayForYield(Array(1,2,3,4,5))
-val g = swapArrayForYield(Array(1,2,3,4,5,6))
+swapArrayForYield(Array(1,2,3,4,5))
+swapArrayForYield(Array(1,2,3,4,5,6))
 
 println
 println("exercise 4")
 //ex 4 return a new array that has the values grouped by positive/negative, but in original order within that
 //this feels like there should be a more functional way to do this, but it works, and it only goes through the 
 //array once (and two thirds), so I'm letting it go for now
+//
+//Could just count the zeros and append that many, but that seems a little like cheating...
 def groupArray(a : Array[Int]) : Array[Int] = {
   val pos = ArrayBuffer[Int]()
   val zer = ArrayBuffer[Int]()
@@ -73,5 +77,22 @@ def groupArray(a : Array[Int]) : Array[Int] = {
   pos.toArray
 }
 
-val tbg = Array(-11, 2, 3, -4, -86, -1, 7, 0, 44, -9)
-val i = groupArray(tbg)
+groupArray(Array(-11, 2, 3, -4, -86, -1, 7, 0, 44, 0, -9))
+
+println
+println("exercise 5")
+//How do you compute the average of an Array[Double]
+//doesn't worry about overflow or length > maxInt
+def averageArray(a : Array[Double]) : Double = {
+  a.fold(0.0){_ + _} / a.length
+}
+
+//this one loses precision, but can't overflow
+def averageArray2(a : Array[Double]) : Double = {
+  a.map(_/a.length).fold(0.0){_ + _}
+}
+
+averageArray(Array(3.14, 15.2))
+averageArray(Array(3.14, 15.2, -18.34))
+averageArray(Array(3.14, 15.2, -18.34, 0))
+averageArray2(Array(3.14, 15.2, -18.34, 0, 49.4533))
