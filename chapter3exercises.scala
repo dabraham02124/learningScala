@@ -52,11 +52,13 @@ swapArrayForYield(Array(1,2,3,4,5,6))
 
 println
 println("exercise 4")
-//ex 4 return a new array that has the values grouped by positive/negative, but in original order within that
-//this feels like there should be a more functional way to do this, but it works, and it only goes through the 
-//array once (and two thirds), so I'm letting it go for now
+//ex 4 return a new array that has the values grouped by positive/negative, 
+//but in original order within that.
+//It feels like there should be a more functional way to do this, but it 
+//works, and it only goes through the array once (and two thirds), so I'm 
+//letting it go for now
 //
-//Could just count the zeros and append that many, but that seems a little like cheating...
+//I could just count the zeros and append that many, but that seems a little like cheating...
 def groupArray(a : Array[Int]) : Array[Int] = {
   val pos = ArrayBuffer[Int]()
   val zer = ArrayBuffer[Int]()
@@ -77,22 +79,38 @@ def groupArray(a : Array[Int]) : Array[Int] = {
   pos.toArray
 }
 
+//this is cleaner, but it goes through the array three times (and two thirds)
+def groupArray2(a : Array[Int]) : Array[Int] = {
+  val pos = a.filter(x => x > 0)
+  val zer = a.filter(x => x == 0)
+  val neg = a.filter(x => x < 0)
+
+  pos ++ zer ++ neg
+}
+
+
 groupArray(Array(-11, 2, 3, -4, -86, -1, 7, 0, 44, 0, -9))
+groupArray2(Array(-11, 2, 3, -4, -86, -1, 7, 0, 44, 0, -9))
 
 println
 println("exercise 5")
 //How do you compute the average of an Array[Double]
 //doesn't worry about overflow or length > maxInt
 def averageArray(a : Array[Double]) : Double = {
-  a.fold(0.0){_ + _} / a.length
+  a.fold(0.0){_+_} / a.length
 }
 
-//this one loses precision, but can't overflow
+//this one potentially loses precision, but can't overflow
 def averageArray2(a : Array[Double]) : Double = {
-  a.map(_/a.length).fold(0.0){_ + _}
+  a.map(_/a.length).fold(0.0){_+_}
 }
 
 averageArray(Array(3.14, 15.2))
 averageArray(Array(3.14, 15.2, -18.34))
 averageArray(Array(3.14, 15.2, -18.34, 0))
+averageArray(Array(3.14, 15.2, -18.34, 0, 49.4533))
+
+averageArray2(Array(3.14, 15.2))
+averageArray2(Array(3.14, 15.2, -18.34))
+averageArray2(Array(3.14, 15.2, -18.34, 0))
 averageArray2(Array(3.14, 15.2, -18.34, 0, 49.4533))
