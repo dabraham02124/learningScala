@@ -81,16 +81,31 @@ def groupArray(a : Array[Int]) : Array[Int] = {
 
 //this is cleaner, but it goes through the array three times (and two thirds)
 def groupArray2(a : Array[Int]) : Array[Int] = {
-  val pos = a.filter(x => x > 0)
-  val zer = a.filter(x => x == 0)
-  val neg = a.filter(x => x < 0)
+  val pos = a.filter(_ > 0)
+  val zer = a.filter(_ == 0)
+  val neg = a.filter(_ < 0)
 
   pos ++ zer ++ neg
+}
+
+//Aha!  At last a functional approach that only goes through the list once (and two thirds)
+//got this starting by looking at Seq.partition.  There is nothing that I see promising that
+//groupBy maintains order.  But it would be kind of insane if it didn't...
+def groupArray3(a : Array[Int]) : Array[Int] = {
+  val subSeqs = a.groupBy {
+    case (_ > 0) => "pos"
+    case i if (i == 0) => "zer"
+    case _ => "neg"
+    }
+
+  subSeqs.getOrElse("pos",Array()) ++ subSeqs.getOrElse("zer",Array()) ++ subSeqs.getOrElse("neg",Array())
 }
 
 
 groupArray(Array(-11, 2, 3, -4, -86, -1, 7, 0, 44, 0, -9))
 groupArray2(Array(-11, 2, 3, -4, -86, -1, 7, 0, 44, 0, -9))
+groupArray3(Array(-11, 2, 3, -4, -86, -1, 7, 0, 44, 0, -9))
+groupArray3(Array(-11, 2, 3, -4, -86, -1, 7, 44, -9))
 
 println
 println("exercise 5")
@@ -105,6 +120,11 @@ def averageArray2(a : Array[Double]) : Double = {
   a.map(_/a.length).fold(0.0){_+_}
 }
 
+//thank you Alec
+def averageArray3(a : Array[Double]) : Double = {
+  a.sum/a.length
+}
+
 averageArray(Array(3.14, 15.2))
 averageArray(Array(3.14, 15.2, -18.34))
 averageArray(Array(3.14, 15.2, -18.34, 0))
@@ -114,3 +134,24 @@ averageArray2(Array(3.14, 15.2))
 averageArray2(Array(3.14, 15.2, -18.34))
 averageArray2(Array(3.14, 15.2, -18.34, 0))
 averageArray2(Array(3.14, 15.2, -18.34, 0, 49.4533))
+
+averageArray3(Array(3.14, 15.2))
+averageArray3(Array(3.14, 15.2, -18.34))
+averageArray3(Array(3.14, 15.2, -18.34, 0))
+averageArray3(Array(3.14, 15.2, -18.34, 0, 49.4533))
+
+println
+println("exercise 6")
+//sort an Array in reverse order, ditto an ArrayBuffer
+Array(1,5,2,88,14,2).sortWith(_<_).reverse
+ArrayBuffer(1,5,2,88,14,2).sortWith(_<_).reverse
+
+Array(1,5,2,88,14,2).sortWith(_>_)
+ArrayBuffer(1,5,2,88,14,2).sortWith(_>_)
+
+println
+println("exercise 7")
+//remove duplicates from an array
+Array(1,5,2,88,14,2).distinct
+
+
