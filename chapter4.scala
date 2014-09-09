@@ -29,3 +29,19 @@ val months = scala.collection.mutable.LinkedHashMap("January" -> 1, "February" -
 //4.6 java interop
 import scala.collection.JavaConversions.mapAsScalaMap
 val mapFromJava : scala.collection.mutable.Map[String, Int] = new java.util.TreeMap[String, Int]
+
+//4.7 tuples
+val t = (1, 3.14, "Fred")
+val second =  t._2              //outputs 3.14 as the second element of the tuple
+val (first, second, third) = t  //sets first to 1, second to 3.14, ...
+val (first, _, _) = t           //sets first to 1
+"New York".partition(_.isUpper) //yields "NY", and "ew ork"
+
+//4.8 Zipping
+val symbols = Array("<", "-", ">")
+val counts = Array(2, 10, 2)
+val pairs = symbols.zip(counts)
+
+for ((s,n) <- pairs) Console.print(s * n)
+
+val map = pairs.toMap
